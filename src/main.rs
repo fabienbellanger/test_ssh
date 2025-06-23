@@ -27,12 +27,12 @@ fn main() {
     println!("Connection success!");
 
     // Try to run the ls command
-    println!("\n Run ls command...");
+    println!("\nRun ls command...");
     let mut channel = sess.channel_session().unwrap();
     channel.exec("ls -lha").unwrap();
     let mut s = String::new();
     channel.read_to_string(&mut s).unwrap();
-    println!("{}", s);
+    println!("ls result:\n{}", s);
     channel.wait_close().unwrap();
-    println!("{}", channel.exit_status().unwrap());
+    println!("--------\nExit status: {}", channel.exit_status().unwrap());
 }
