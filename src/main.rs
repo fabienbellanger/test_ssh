@@ -29,10 +29,19 @@ fn main() {
     // Try to run the ls command
     println!("\nRun ls command...");
     let mut channel = sess.channel_session().unwrap();
-    channel.exec("ls -lha").unwrap();
+    channel.exec("ls -lh").unwrap();
     let mut s = String::new();
     channel.read_to_string(&mut s).unwrap();
     println!("ls result:\n{}", s);
+    channel.wait_close().unwrap();
+    println!("--------\nExit status: {}", channel.exit_status().unwrap());
+
+    // Try pwd command
+    let mut channel = sess.channel_session().unwrap();
+    channel.exec("pwd").unwrap();
+    let mut s = String::new();
+    channel.read_to_string(&mut s).unwrap();
+    println!("pwd result:\n{}", s);
     channel.wait_close().unwrap();
     println!("--------\nExit status: {}", channel.exit_status().unwrap());
 }
